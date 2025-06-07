@@ -10,10 +10,10 @@ struct TreeNode {
 };
 
 
-bool isLeaf(Node* node){
+bool isLeaf(TreeNode* node){
     return !node->left && !node->right;
 }
-void addLeaves(Node* node,vector<int>& result){
+void addLeaves(TreeNode* node,vector<int>& result){
     if(isLeaf(node)){
         result.push_back(node->val);
         return;
@@ -21,20 +21,20 @@ void addLeaves(Node* node,vector<int>& result){
     if(node->left) addLeaves(node->left,result);
     if(node->right) addLeaves(node->right,result);
 }
-void addLeftBoundary(Node* node,vector<int>& result){
+void addLeftBoundary(TreeNode* node,vector<int>& result){
     if(!node || isLeaf(node)) return;
     result.push_back(node->val);
     if(node->left) addLeftBoundary(node->left,result);
     else addLeftBoundary(node->right,result);
 }
-void addRightBoundary(Node* node,vector<int>& result){
+void addRightBoundary(TreeNode* node,vector<int>& result){
     if(!node || isLeaf(node)) return;
     if(node->right) addRightBoundary(node->right,result);
     else addRightBoundary(node->left,result);
     result.push_back(node->val);
 }
 //main call
-vector<int> boundaryTraversal(Node *root) {
+vector<int> boundaryTraversal(TreeNode *root) {
     vector<int> result;
     if(root==NULL) return result;
     if(!isLeaf(root)) result.push_back(root->val);
