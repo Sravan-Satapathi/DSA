@@ -1,3 +1,5 @@
+//1.Undirected Graph
+
 //Using DFS
 class Solution {
   public:
@@ -30,7 +32,6 @@ class Solution {
         return false;
     }
 };
-
 
 
 //Using BFS
@@ -66,6 +67,42 @@ class Solution {
         for(int i=0;i<V;i++){
             if(!visited[i]){
                 if(bfs(i,visited,adj_list)) return true;
+            }
+        }
+        return false;
+    }
+};
+
+
+
+//2. Directed Graph
+
+//Using DFS
+class Solution {
+  public:
+    bool dfs(int node,vector<bool>& visited,vector<bool>& pathVisited,vector<int> adj_list[]){
+        visited[node]=true;
+        pathVisited[node]=true;
+        for(auto neighbour:adj_list[node]){
+            if(!visited[neighbour]){
+                if(dfs(neighbour,visited,pathVisited,adj_list)) return true;
+            }
+            else if(pathVisited[neighbour]) return true;
+        }
+        pathVisited[node]=false;
+        return false;
+    }
+    bool isCyclic(int V, vector<vector<int>> &edges) {
+        // code here
+        vector<int> adj_list[V];
+        for(int i=0;i<edges.size();i++){
+            int u=edges[i][0],v=edges[i][1];
+            adj_list[u].push_back(v);
+        }
+        vector<bool> visited(V,false),pathVisited(V,false);
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                if(dfs(i,visited,pathVisited,adj_list)) return true;
             }
         }
         return false;
